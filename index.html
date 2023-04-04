@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <form>
+      <input type="file" name="Files" required multiple />
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="image-preview"></div>
+
+    <script>
+      const formElem = document.querySelector('form');
+      const imagePreviewElem = document.querySelector('#image-preview');
+
+      formElem.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await fetch('/upload', {
+          method: 'POST',
+          body: new FormData(formElem),
+        });
+        formElem.reset();
+        imagePreviewElem.innerHTML = '';
+      });
+
+      formElem.querySelector('input').addEventListener('change', (e) => {
+        const files = e.target.files;
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+
+          reader.addEventListener('load', () => {
+            const imgElem = document.createElement('img');
+            imgElem.src = reader.result;
+            imgElem.alt = file.name;
+            imagePreviewElem.appendChild(imgElem);
+          });
+
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+  </body>
+</html>
