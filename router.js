@@ -15,16 +15,16 @@ const auth = new google.auth.GoogleAuth({
   scopes: SCOPES,
 });
 
-const uploadFile = async (fileObject) => {
+const uploadFile = async (fileObject, newName) => {
   const bufferStream = new stream.PassThrough();
   bufferStream.end(fileObject.buffer);
   const { data } = await google.drive({ version: "v3", auth }).files.create({
     media: {
-      mimeType: fileObject.mimeType,
+      mimeType: fileObject.mimetype,
       body: bufferStream,
     },
     requestBody: {
-      name: fileObject.originalname,
+      name: newName,
       parents: ["1I9eZW5ioEgxH0VT3oTalAc5XyVSxVTU0"],
     },
     fields: "id,name",
@@ -32,6 +32,8 @@ const uploadFile = async (fileObject) => {
   console.log(`Uploaded file ${data.name} ${data.id}`);
   return data.id;
 };
+
+const DEFAULT_FILE_NAME = "my-file.jpg";
 
 let fileId = "";
 
@@ -42,7 +44,7 @@ uploadRouter.post("/upload", upload.any(), async (req, res) => {
     const { body, files } = req;
 
     for (let f = 0; f < files.length; f += 1) {
-      fileId = await uploadFile(files[f]);
+      fileId = await uploadFile(files[f], DEFAULT_FILE_NAME);
     }
 
     console.log(body);
