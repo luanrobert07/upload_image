@@ -1,6 +1,5 @@
 const express = require("express");
 const multer = require("multer");
-const { google } = require("googleapis");
 const File = require("../models/customer");
 const { uploadFile, getFileUrl } = require("../services/upload");
 
@@ -13,8 +12,6 @@ let fileData = {};
 
 uploadRouter.post("/upload", upload.any(), async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.files);
     const { body, files } = req;
 
     for (let f = 0; f < files.length; f += 1) {
@@ -32,5 +29,6 @@ uploadRouter.post("/upload", upload.any(), async (req, res) => {
     res.send(f.message);
   }
 });
+
 
 module.exports = uploadRouter;

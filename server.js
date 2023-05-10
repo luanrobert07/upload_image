@@ -11,6 +11,8 @@ db.connect()
 app.use(express.static('public'));
 app.use("/", uploadRouter);
 
+
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });

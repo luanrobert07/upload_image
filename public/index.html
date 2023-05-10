@@ -18,17 +18,17 @@
       const imagePreviewElem = document.querySelector('#image-preview');
 
       formElem.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // evita a ação padrão de enviar o formulário
         await fetch('/upload', {
           method: 'POST',
           body: new FormData(formElem),
-        });
-        formElem.reset();
-        imagePreviewElem.innerHTML = '';
+        }); //envia a solicitação POST para o servidor usando a API fetch(). A solicitação inclui o conteúdo do formulário usando um objeto FormData
+        formElem.reset(); // reinicia o formulário
+        imagePreviewElem.innerHTML = ''; //esvazia a div de visualização de imagens.
       });
 
       formElem.querySelector('input').addEventListener('change', (e) => {
-        const files = e.target.files;
+        const files = e.target.files; //obtém as informações dos arquivos selecionados
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
