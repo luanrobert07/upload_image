@@ -35,9 +35,8 @@ const uploadFile = async (fileObject, newName) => {
   });
   
   // Exibe uma mensagem com o nome e ID do arquivo enviado
-  console.log(`Uploaded file ${data.name} ${data.id}`);
+  console.log(`Name file: ${data.name} id da imagem: ${data.id}`);
   
-  // Retorna os dados do arquivo enviado
   return data;
 };
 

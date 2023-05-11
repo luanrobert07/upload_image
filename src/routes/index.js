@@ -6,7 +6,7 @@ const { uploadFile, getFileUrl } = require("../services/upload");
 const uploadRouter = express.Router();
 const upload = multer();
 
-const DEFAULT_FILE_NAME = "my-file.jpg";
+const DEFAULT_FILE_NAME = "my-file.jpg"; //nome do arquivo no Google Drive
 
 let fileData = {};
 
